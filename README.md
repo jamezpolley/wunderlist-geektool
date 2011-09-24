@@ -1,11 +1,7 @@
 # Project Descriptpton  
 Looks up the projects and tasks in your wunderlist.db, and exports them in a ANSI marked up manner appropriate for display in geektool3
 
-**Requires** sqllite3 gem.
-
-`sudo gem install sqlite3`
-
-If you have trouble with the install, there's about 100 web pages on how to troubleshoot it.
+**Requires** nothing outside of the python core libraries.
 
 ## Details  
 If a task is marked as IMPORTANT in wunderlist, it will be prefaced with a star and styled with the `ESCAPE_IMPORTANT_COLOR`  
