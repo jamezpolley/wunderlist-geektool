@@ -7,7 +7,26 @@ Based on code from Matthew Cave https://github.com/ender3/wunderlist-geektool
 
 import datetime
 import getpass
+import optparse
 import sqlite3
+
+def parse_args():
+
+    p = optparse.OptionParser()
+    p.add_option("--list", "-l", action="append", metavar="LISTNAME",
+            help="Show tasks from this list. If not specified, show all lists.")
+    p.add_option("--notes", "--n", action="store_true",
+            help="Print notes as well")
+
+    return p.parse_args()
+
+def print_list(list):
+    if not opts.list:
+        return True
+    else:
+        return list in opts.list
+
+opts, _ = parse_args()
 
 USERNAME=getpass.getuser()
 
@@ -26,6 +45,8 @@ INDENT = u"    "
 list_cursor = conn.cursor()
 lists = list_cursor.execute("select id, name, position from lists where deleted = '0' order by position")
 for list in lists:
+    if not print_list(list['name']):
+        continue
     printedHeader = False
     task_cursor = conn.cursor()
     tasks = task_cursor.execute("select id, date, name, note, important, "
@@ -64,5 +85,5 @@ for list in lists:
         print taskString.encode('utf-8')
 
         # if there is a note, print it in italics
-        if task['note']:
+        if opts.notes and task['note']:
           print INDENT + INDENT + ESCAPE_NOTE_MARKUP + task['note'] + ESCAPE_CANCEL 
