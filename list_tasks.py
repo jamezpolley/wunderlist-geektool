@@ -60,7 +60,8 @@ for list in lists:
           taskToOutput.extend((ESCAPE_IMPORTANT_COLOR, u"★ ", ESCAPE_CANCEL))
         taskToOutput.extend((task['name']))
 
-        print ''.join(unicode(x) for x in taskToOutput)
+        taskString = ''.join(taskToOutput)
+        print taskString.encode('utf-8')
 
         # if there is a note, print it in italics
         if task['note']:
